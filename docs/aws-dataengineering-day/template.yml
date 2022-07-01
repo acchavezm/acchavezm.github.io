@@ -1,0 +1,37 @@
+ ---
+AWSTemplateFormatVersion: 2010-09-09
+Description: Supporting elements for the Kinesis Analytics click stream lab
+Parameters:
+  email:
+    Description: Email address to send anomaly detection events.
+    Type: String
+  SMS:
+    Description: Mobile Phone number to send SMS anomaly detection events. +1XXXXXXXXXX
+    Type: String
+  Username:
+    Description: The username of the user you want to create in Amazon Cognito.
+    Type: String
+    AllowedPattern: "^(?=\\s*\\S).*$"
+    ConstraintDescription: Cannot be empty
+  Password:
+    Description: The password of the user you want to create in Amazon Cognito. Must be at least 6 alpha-numeric characters, and contain at least one number
+    Type: String
+    NoEcho: true
+    AllowedPattern: "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$"
+    ConstraintDescription: Must be at least 6 alpha-numeric characters, and contain at least one number
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      -
+        Label:
+          default: "Kinesis Pre Lab set up"
+        Parameters:
+          - "Username"
+          - "Password"
+          - "email"
+          - "SMS"
+Resources:
+  RawS3Bucket:
+    Type: AWS::S3::Bucket
+  ProcessedS3Bucket:
+    Type: AWS::S3::Bucket
